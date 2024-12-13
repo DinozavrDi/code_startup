@@ -5,7 +5,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { langs, LanguageName, loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { theme } from "@/components/theme";
 import { TestResponse } from "@/types/index.t";
-import { execute } from "./action";
+import { execute } from "@/components/server";
 
 export default function Home() {
 
@@ -23,6 +23,12 @@ export default function Home() {
 
   const onRunHandler = async () => {
     await execute({ language: lang, code: inputValue, testStatus: status })
+    // Изначально execute должен выполнятся в action.ts
+    // Но так-как приложение пишется под статику, то его выполнение
+    // Пришлось перенести в другой файл с серверной части
+    // При наличии сервера, будет использован изначальный метод
+
+
     .then((res) => {
       setOutputValue(res);
     })
